@@ -3,6 +3,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 <%@ page isELIgnored="false"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,12 +30,14 @@
 </head>
 <body>
 
+
+
 	<div class="container">
-	
-		<f:form class="form-signin" method="post" action="authenticateTheUser">
+
+		<form class="form-signin" method="post" action="authenticateTheUser">
 			<h2 class="form-signin-heading">Lütfen Bağlanın</h2>
 			<p>
-			
+
 				<label for="username" class="sr-only">Kullanici</label> <input
 					type="text" id="username" name="username" class="form-control"
 					placeholder="Username" required autofocus>
@@ -46,14 +50,20 @@
 
 			<c:if test="${param.error != null}">
 				<b class="error">Hatalı kullanıcı adı veya şifre girdiniz</b>
-				
+
 			</c:if>
 			<c:if test="${param.logout!= null}">
 				<b class="error"><i>Sistemden çıkış yaptınız</i></b>
 			</c:if>
 
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Bağlan</button>
-		</f:form>
+
+			<!-- I'm manually adding tokens belows-->
+			<input type="hidden" value="${_csrf.token}"
+				name="${_csrf.parameterName}" />
+
+
+		</form>
 	</div>
 </body>
 </html>
